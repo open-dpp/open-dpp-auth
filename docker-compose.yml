@@ -1,11 +1,11 @@
-version: '3'
 services:
   keycloak:
-    image: quay.io/keycloak/keycloak:latest
-    command: "start-dev --import-realm --hostname http://localhost:20000 --proxy-headers xforwarded"
+    build:
+      context: .
+      dockerfile: Dockerfile
     environment:
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
       KC_HEALTH_ENABLED: true
       KC_HOSTNAME_DEBUG: true
     ports:
@@ -16,9 +16,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 20
-    volumes:
-      - keycloak-keycloak-data:/opt/keycloak/data
-      - ./keycloak:/opt/keycloak/data/import
     networks:
       - auth
 
