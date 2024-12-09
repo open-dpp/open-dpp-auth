@@ -1,0 +1,49 @@
+version: '3'
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    command: "start-dev --import-realm --hostname http://localhost:20000 --proxy-headers xforwarded"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HEALTH_ENABLED: true
+      KC_HOSTNAME_DEBUG: true
+    ports:
+      - "20000:8080"
+      - "20008:9000"
+    healthcheck:
+      test: [ "CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/9000;echo -e \"GET /health/ready HTTP/1.1\r\nhost: http://localhost\r\nConnection: close\r\n\r\n\" >&3;grep \"HTTP/1.1 200 OK\" <&3" ]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - keycloak-keycloak-data:/opt/keycloak/data
+      - ./keycloak:/opt/keycloak/data/import
+    networks:
+      - auth
+
+  keycloak-db:
+    container_name: keycloak-db
+    platform: linux/amd64 #for platform error on Apple M1 chips
+    restart: unless-stopped
+    env_file: .env
+    image: postgres:14.5-alpine
+    environment:
+      POSTGRES_USER: 'open-dpp'
+      POSTGRES_PASSWORD: 'open-dpp'
+      POSTGRES_DB: 'open-dpp'
+    volumes:
+      - keycloak-db:/var/lib/postgresql/data/ #using a volume
+      #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
+    ports:
+      - '20003:5432'
+    networks:
+      - auth
+
+volumes:
+  keycloak-db:
+  keycloak-data:
+
+networks:
+  auth:
+    driver: bridge
