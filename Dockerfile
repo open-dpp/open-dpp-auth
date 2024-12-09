@@ -1,7 +1,7 @@
 FROM openjdk:21-slim as healthcheck
 WORKDIR /opt/healthcheck
-COPY ./docker/keycloak/Healthcheck.java Healthcheck.java
-COPY ./docker/keycloak/Manifest.txt Manifest.txt
+COPY ./keycloak/Healthcheck.java Healthcheck.java
+COPY ./keycloak/Manifest.txt Manifest.txt
 RUN javac Healthcheck.java
 RUN jar cvfm healthcheck.jar Manifest.txt Healthcheck.class
 
