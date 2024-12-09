@@ -1,3 +1,10 @@
+FROM openjdk:21-slim as healthcheck
+WORKDIR /opt/healthcheck
+COPY ./docker/keycloak/Healthcheck.java Healthcheck.java
+COPY ./docker/keycloak/Manifest.txt Manifest.txt
+RUN javac Healthcheck.java
+RUN jar cvfm healthcheck.jar Manifest.txt Healthcheck.class
+
 FROM quay.io/keycloak/keycloak:26.0.6 as builder
 
 # Enable health and metrics support
@@ -33,8 +40,8 @@ COPY --from=builder /opt/keycloak/ /opt/keycloak/
 COPY ./keycloak/realm-export.json /opt/keycloak/data/import/realm.json
 
 # Create healthcheck script
-# WORKDIR /opt/healthcheck
-# COPY --from=healthcheck /opt/healthcheck/healthcheck.jar /opt/healthcheck/healthcheck.jar
+WORKDIR /opt/healthcheck
+COPY --from=healthcheck /opt/healthcheck/healthcheck.jar /opt/healthcheck/healthcheck.jar
 
 WORKDIR /opt/keycloak
 
