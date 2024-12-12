@@ -7,10 +7,12 @@ services:
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: admin
       KC_HEALTH_ENABLED: true
+      KC_HOSTNAME: localhost
       KC_HOSTNAME_DEBUG: true
     ports:
       - "20000:8080"
       - "20008:9000"
+    command: start-dev --import-realm
     healthcheck:
       test: [ "CMD-SHELL", "java -jar /opt/healthcheck/healthcheck.jar http://127.0.0.1:8080/realms/living-circle" ]
       interval: 30s

@@ -39,6 +39,7 @@ COPY --from=builder /opt/keycloak/ /opt/keycloak/
 # Copy the realm configuration
 COPY ./keycloak/realm-export.json /opt/keycloak/data/import/realm.json
 
+
 # Create healthcheck script
 WORKDIR /opt/healthcheck
 COPY --from=healthcheck /opt/healthcheck/healthcheck.jar /opt/healthcheck/healthcheck.jar
@@ -46,7 +47,4 @@ COPY --from=healthcheck /opt/healthcheck/healthcheck.jar /opt/healthcheck/health
 WORKDIR /opt/keycloak
 
 # --spi-theme-static-max-age=-1 --spi-theme-cache-themes=false --spi-theme-cache-templates=false
-ENTRYPOINT [ "" ]
-#CMD /opt/keycloak/bin/kc.sh start-dev
-CMD /opt/keycloak/bin/kc.sh import --file /opt/keycloak/data/import/realm.json; \
-	/opt/keycloak/bin/kc.sh start-dev --hostname http://localhost:20000 --proxy-headers xforwarded
+ENTRYPOINT [ "/opt/keycloak/bin/kc.sh" ]
