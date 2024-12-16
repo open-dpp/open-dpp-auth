@@ -718,18 +718,18 @@
       "clientId": "frontend",
       "name": "",
       "description": "",
-      "rootUrl": "http://localhost:20004",
-      "adminUrl": "http://localhost:20004",
-      "baseUrl": "http://localhost:20004",
+      "rootUrl": "${API_ROOT}",
+      "adminUrl": "${API_ROOT}",
+      "baseUrl": "${API_ROOT}",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "http://localhost:20004"
+        "${API_ROOT}"
       ],
       "webOrigins": [
-        "http://localhost:20004"
+        "${API_ROOT}"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -744,7 +744,7 @@
       "attributes": {
         "oidc.ciba.grant.enabled": "false",
         "backchannel.logout.session.required": "true",
-        "post.logout.redirect.uris": "http://localhost:20004",
+        "post.logout.redirect.uris": "${API_ROOT}",
         "oauth2.device.authorization.grant.enabled": "false",
         "display.on.consent.screen": "false",
         "backchannel.logout.revoke.offline.tokens": "false"
