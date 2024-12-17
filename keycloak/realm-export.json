@@ -718,18 +718,18 @@
       "clientId": "frontend",
       "name": "",
       "description": "",
-      "rootUrl": "${API_ROOT}",
-      "adminUrl": "${API_ROOT}",
-      "baseUrl": "${API_ROOT}",
+      "rootUrl": "${MANAGEMENT_ROOT_URL}",
+      "adminUrl": "${MANAGEMENT_ROOT_URL}",
+      "baseUrl": "${MANAGEMENT_ROOT_URL}",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "${API_ROOT}"
+        "${MANAGEMENT_ROOT_URL}"
       ],
       "webOrigins": [
-        "${API_ROOT}"
+        "${MANAGEMENT_ROOT_URL}"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -744,7 +744,7 @@
       "attributes": {
         "oidc.ciba.grant.enabled": "false",
         "backchannel.logout.session.required": "true",
-        "post.logout.redirect.uris": "${API_ROOT}",
+        "post.logout.redirect.uris": "${MANAGEMENT_ROOT_URL}",
         "oauth2.device.authorization.grant.enabled": "false",
         "display.on.consent.screen": "false",
         "backchannel.logout.revoke.offline.tokens": "false"
