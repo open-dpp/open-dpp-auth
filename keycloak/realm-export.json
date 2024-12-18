@@ -1,6 +1,6 @@
 {
   "id": "866a7bb8-2e91-45e2-b320-bd3784585993",
-  "realm": "living-circle",
+  "realm": "open-dpp",
   "notBefore": 0,
   "defaultSignatureAlgorithm": "RS256",
   "revokeRefreshToken": false,
@@ -57,7 +57,7 @@
       },
       {
         "id": "a62cbadc-5cbd-4ebc-a90e-bf95830f74e7",
-        "name": "default-roles-living-circle",
+        "name": "default-roles-open-dpp",
         "description": "${role_default-roles}",
         "composite": true,
         "composites": {
@@ -408,7 +408,7 @@
   "groups": [],
   "defaultRole": {
     "id": "a62cbadc-5cbd-4ebc-a90e-bf95830f74e7",
-    "name": "default-roles-living-circle",
+    "name": "default-roles-open-dpp",
     "description": "${role_default-roles}",
     "composite": true,
     "clientRole": false,
@@ -481,13 +481,13 @@
       "clientId": "account",
       "name": "${client_account}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/living-circle/account/",
+      "baseUrl": "/realms/open-dpp/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/living-circle/account/*"
+        "/realms/open-dpp/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -526,13 +526,13 @@
       "clientId": "account-console",
       "name": "${client_account-console}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/living-circle/account/",
+      "baseUrl": "/realms/open-dpp/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/living-circle/account/*"
+        "/realms/open-dpp/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -813,13 +813,13 @@
       "clientId": "security-admin-console",
       "name": "${client_security-admin-console}",
       "rootUrl": "${authAdminUrl}",
-      "baseUrl": "/admin/living-circle/console/",
+      "baseUrl": "/admin/open-dpp/console/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/admin/living-circle/console/*"
+        "/admin/open-dpp/console/*"
       ],
       "webOrigins": [
         "+"
