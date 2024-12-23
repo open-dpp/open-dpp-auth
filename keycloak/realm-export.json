@@ -28,12 +28,12 @@
   "enabled": true,
   "sslRequired": "external",
   "registrationAllowed": true,
-  "registrationEmailAsUsername": false,
+  "registrationEmailAsUsername": true,
   "rememberMe": false,
-  "verifyEmail": false,
+  "verifyEmail": true,
   "loginWithEmailAllowed": true,
   "duplicateEmailsAllowed": false,
-  "resetPasswordAllowed": false,
+  "resetPasswordAllowed": true,
   "editUsernameAllowed": false,
   "bruteForceProtected": false,
   "permanentLockout": false,
@@ -1479,7 +1479,20 @@
     "xXSSProtection": "1; mode=block",
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
-  "smtpServer": {},
+  "smtpServer": {
+    "password": "${SMTP_PASSWORD}",
+    "replyToDisplayName": "",
+    "starttls": "${SMTP_TLS}",
+    "auth": "true",
+    "port": "${SMTP_PORT}",
+    "host": "${SMTP_HOST}",
+    "replyTo": "",
+    "from": "${SMTP_FROM}",
+    "fromDisplayName": "",
+    "envelopeFrom": "",
+    "ssl": "false",
+    "user": "${SMTP_USER}"
+  },
   "eventsEnabled": false,
   "eventsListeners": [
     "jboss-logging"
