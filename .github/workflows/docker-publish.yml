@@ -63,8 +63,6 @@ jobs:
             type=ref,event=branch,pattern=^main$,value=latest
             # For semver version tags, e.g., v1.2.3
             type=ref,event=tag
-            # Or create additional semver-based tags
-            type=semver,pattern={{version}}
 
       # Build and push multi-platform images
       - name: Build and push Docker image
