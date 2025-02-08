@@ -47,4 +47,6 @@ COPY --from=healthcheck /opt/healthcheck/healthcheck.jar /opt/healthcheck/health
 WORKDIR /opt/keycloak
 
 # --spi-theme-static-max-age=-1 --spi-theme-cache-themes=false --spi-theme-cache-templates=false
+
+RUN /opt/keycloak/bin/kc.sh import --file /opt/keycloak/data/import/realm.json
 ENTRYPOINT [ "/opt/keycloak/bin/kc.sh" ]
