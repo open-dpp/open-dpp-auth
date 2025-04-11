@@ -1,5 +1,6 @@
 services:
   keycloak:
+    container_name: keycloak
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,10 +10,17 @@ services:
       KC_HEALTH_ENABLED: true
       KC_HOSTNAME: localhost
       KC_HOSTNAME_DEBUG: true
+      KC_HOSTNAME_STRICT: false
+      KC_HTTP_ENABLED: true
+      MANAGEMENT_ROOT_URL: http://localhost:9000
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://auth-db/open-dpp
+      KC_DB_USERNAME: open-dpp
+      KC_DB_PASSWORD: open-dpp
     ports:
       - "20000:8080"
       - "20008:9000"
-    command: start-dev --import-realm
+    command: start-dev
     healthcheck:
       test: [ "CMD-SHELL", "java -jar /opt/healthcheck/healthcheck.jar http://127.0.0.1:8080/realms/open-dpp" ]
       interval: 30s
@@ -22,8 +30,8 @@ services:
     networks:
       - auth
 
-  keycloak-db:
-    container_name: keycloak-db
+  auth-db:
+    container_name: auth-db
     platform: linux/amd64 #for platform error on Apple M1 chips
     restart: unless-stopped
     env_file: .env
@@ -40,9 +48,31 @@ services:
     networks:
       - auth
 
+  config-cli:
+    image: adorsys/keycloak-config-cli:latest
+    depends_on:
+      - keycloak
+    environment:
+      KEYCLOAK_URL: http://keycloak:8080
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      IMPORT_FILES_LOCATIONS: /config/*.json
+      MANAGEMENT_ROOT_URL: http://localhost:8080
+      IMPORT_VARSUBSTITUTION_ENABLED: true
+#      LOGGING_LEVEL_REALMCONFIG: debug
+#      LOGGING_LEVEL_ROOT: debug
+      LOGGING_LEVEL_KEYCLOAKCONFIGCLI: debug
+#      MANAGEMENT_ROOT_URL, SMTP_PASSWORD, SMTP_TLS, SMTP_PORT, SMTP_HOST, SMTP_FROM, SMTP_USER
+      # Optional: ignore missing realm
+      # KEYCLOAK_AVAILABILITYCHECK_ENABLED: "true"
+    volumes:
+      - ./realm-config:/config
+    restart: "no" # Only runs once at startup
+    networks:
+      - auth
+
 volumes:
   keycloak-db:
-  keycloak-data:
 
 networks:
   auth:
