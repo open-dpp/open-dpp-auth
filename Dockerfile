@@ -36,9 +36,6 @@ COPY --from=builder /opt/keycloak/ /opt/keycloak/
 # Copy the custom .jar
 # COPY --from=maven /data/target/deploy/ /opt/keycloak/providers/
 
-# Copy the realm configuration
-COPY ./keycloak/realm-export.json /opt/keycloak/data/import/realm.json
-
 # Create healthcheck script
 WORKDIR /opt/healthcheck
 COPY --from=healthcheck /opt/healthcheck/healthcheck.jar /opt/healthcheck/healthcheck.jar

@@ -12,7 +12,7 @@ services:
     ports:
       - "20000:8080"
       - "20008:9000"
-    command: start-dev --import-realm
+    command: start
     healthcheck:
       test: [ "CMD-SHELL", "java -jar /opt/healthcheck/healthcheck.jar http://127.0.0.1:8080/realms/open-dpp" ]
       interval: 30s
