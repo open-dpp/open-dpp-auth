@@ -1,20 +1,14 @@
 package org.opendpp.resources;
 
-import jakarta.persistence.EntityManager;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
-import org.keycloak.connections.jpa.JpaConnectionProvider;
 import org.keycloak.models.*;
 import org.keycloak.protocol.oidc.TokenManager;
 import org.keycloak.representations.AccessToken;
 import org.keycloak.services.util.DefaultClientSessionContext;
 import org.opendpp.credentials.apikey.ApiKeyHelper;
-import org.opendpp.credentials.apikey.ApiKeySecretData;
-import org.opendpp.enums.CustomUserAttributes;
-import org.opendpp.enums.OpenDppRealmConfigs;
 import org.jboss.logging.Logger;
 
-import java.util.List;
 import java.util.Map;
 
 public class ApiKeyResource {
@@ -22,11 +16,9 @@ public class ApiKeyResource {
     protected static final Logger logger = Logger.getLogger(ApiKeyResource.class);
 
     private KeycloakSession session;
-    private EntityManager entityManager;
 
     public ApiKeyResource(KeycloakSession session) {
         this.session = session;
-        this.entityManager = session.getProvider(JpaConnectionProvider.class).getEntityManager();
     }
 
     @GET
@@ -89,7 +81,12 @@ public class ApiKeyResource {
         String userId = authenticatedUser.getId();
 
         String apiKey = ApiKeyHelper.addApiKeyCredential(session, session.getContext().getRealm(), userId);
-        return apiKey.isEmpty() ? Response.status(401).build(): Response.ok(apiKey).build();
+        return apiKey.isEmpty() ? Response.status(401).build() : Response
+                .ok(apiKey)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+                .header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+                .build();
     }
 
     @GET
