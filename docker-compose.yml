@@ -9,6 +9,7 @@ services:
       KC_HEALTH_ENABLED: true
       KC_HOSTNAME: localhost
       KC_HOSTNAME_DEBUG: true
+      KC_HTTP_ENABLED: true
     ports:
       - "20000:8080"
       - "20008:9000"
