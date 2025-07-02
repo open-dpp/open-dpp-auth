@@ -45,6 +45,17 @@ public class ApiKeyResource {
         return apiKey.isEmpty() ? Response.status(401).build(): Response.ok(apiKey).build();
     }
 
+    @OPTIONS
+    @Path("create")
+    public Response handleCorsPreflightRequestOnCreateApiKey() {
+        return Response.ok()
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+                .header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+                .header("Access-Control-Max-Age", "3600")
+                .build();
+    }
+
     @POST
     @Path("create")
     @Produces("application/json")
