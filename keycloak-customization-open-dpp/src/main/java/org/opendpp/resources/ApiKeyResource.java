@@ -8,6 +8,7 @@ import org.keycloak.representations.AccessToken;
 import org.keycloak.services.util.DefaultClientSessionContext;
 import org.opendpp.credentials.apikey.ApiKeyHelper;
 import org.jboss.logging.Logger;
+import org.opendpp.enums.OpenDppRealmConfigs;
 
 import java.util.Map;
 
@@ -35,14 +36,6 @@ public class ApiKeyResource {
         );
 
         return Response.ok(response).build();
-    }
-
-    @POST
-    @Path("create-for-user")
-    @Produces("application/json")
-    public Response createApiKeyForUser(@QueryParam("userId") String userId) {
-        String apiKey = ApiKeyHelper.addApiKeyCredential(session, session.getContext().getRealm(), userId);
-        return apiKey.isEmpty() ? Response.status(401).build(): Response.ok(apiKey).build();
     }
 
     @OPTIONS
@@ -115,7 +108,7 @@ public class ApiKeyResource {
 
         // Create user session
         RealmModel realm = session.getContext().getRealm();
-        ClientModel client = realm.getClientByClientId("account"); // or your specific client
+        ClientModel client = realm.getClientByClientId(OpenDppRealmConfigs.CLIENT_FRONTEND.getValue()); // or your specific client
 
         if (client == null) {
             return Response.status(500).entity("Client not found").build();

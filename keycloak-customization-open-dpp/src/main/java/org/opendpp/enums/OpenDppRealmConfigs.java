@@ -1,6 +1,7 @@
 package org.opendpp.enums;
 
 public enum OpenDppRealmConfigs {
+    CLIENT_FRONTEND("frontend"),
     REALM_NAME("open-dpp");
 
     private final String value;
